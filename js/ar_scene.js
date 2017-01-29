@@ -157,17 +157,11 @@ var createAsideBox = function (groupBox, intersect) {
 		new THREE.MeshLambertMaterial( {color: 0xffffff} )
 		)
 
+	intersectedCubePosition = intersect.object.position
 
-
-	cube.position.copy(intersect.object.position)
-	cube.position.x += 1
-	cube.position.y += 1
-	cube.position.z = 0
-
-	// cube.position.copy(intersect.point).add( intersect.face.normal )
-	// cube.position.divideScalar(1).floor().multiplyScalar(1).addScalar(0.5)
-	
-
+	cube.position.x = intersectedCubePosition.x + intersect.face.normal.x * 1
+	cube.position.y = intersectedCubePosition.y + intersect.face.normal.y * 1
+	cube.position.z = intersectedCubePosition.z + intersect.face.normal.z * 1
 
 	groupBox.add(cube)
 	var cubes = groupBox.children.slice()
@@ -202,7 +196,7 @@ window.ARThreeOnLoad = function () {
 		light.position.set(40,40,40)
 		arScene.scene.add(light)
 		
-		var light = new THREE.PointLight(0xff8800);
+		var light = new THREE.PointLight(0xD08003);
 		light.position.set(-40, -20, -30);
 		arScene.scene.add(light);
 
