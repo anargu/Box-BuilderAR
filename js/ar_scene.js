@@ -169,9 +169,10 @@ var createAsideBox = function (groupBox, intersect) {
 }
 
 window.ARThreeOnLoad = function () {
-	ARController.getUserMediaThreeScene( { 	maxARVideoSize: 320, 
+	ARController.getUserMediaThreeScene( { 	
+											facingMode: { exact: "environment" },
+											maxARVideoSize: 320, 
 											cameraParam: 'Data/camera_para-iPhone 5 rear 640x480 1.0m.dat',
-											facingMode: 'user',
 	onSuccess: function(arScene, arController, arCamera) {
 
 		arController.setPatternDetectionMode(artoolkit.AR_MATRIX_CODE_DETECTION)
