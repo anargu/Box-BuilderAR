@@ -199,9 +199,18 @@ window.ARThreeOnLoad = function () {
 		light.position.set(40,40,40)
 		arScene.scene.add(light)
 		
-		var light = new THREE.PointLight(0xD08003);
+		var light = new THREE.PointLight(0xdbbd29);
 		light.position.set(-40, -20, -30);
 		arScene.scene.add(light);
+
+
+		var baseGeometry = new THREE.PlaneGeometry( 5, 5, 32)
+		var baseMaterial = new THREE.MeshBasicMaterial( {color: 0x1377B5, opacity: 0.6, transparent: true , side: THREE.DoubleSide } )
+		var base = new THREE.Mesh(baseGeometry, baseMaterial)
+		base.position.y = 0
+		base.position.x = 0
+		base.position.z = -0.5
+
 
 		var groupBox = createGroupBox()
 		var box = createBox(groupBox)
@@ -224,6 +233,7 @@ window.ARThreeOnLoad = function () {
 
 		var markerRoot = arController.createThreeBarcodeMarker(20)
 		markerRoot.add(box.boxGroup)
+		markerRoot.add(base)
 		arScene.scene.add(markerRoot)
 
 		// loop
