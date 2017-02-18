@@ -170,7 +170,9 @@ var createAsideBox = function (groupBox, intersect) {
 
 window.ARThreeOnLoad = function () {
 	ARController.getUserMediaThreeScene( { 	
-											facingMode: 'environment',
+											facingMode: {
+												      exact: 'environment'
+												      },
 											maxARVideoSize: 320, 
 											cameraParam: 'Data/camera_para-iPhone 5 rear 640x480 1.0m.dat',
 	onSuccess: function(arScene, arController, arCamera) {
