@@ -198,6 +198,10 @@ window.ARThreeOnLoad = function (sourceId) {
 				var w = (window.innerWidth)
 			*/
 
+				//ANARGU CUSTOM VERSION 2
+			var h = (window.innerHeight)
+			var w = (window.innerWidth)
+			
 			/*
 			//extracted from http://stackoverflow.com/questions/17359915/get-screen-resolution-on-a-mobile-website
 			var ratio = window.devicePixelRatio || 1;
@@ -205,12 +209,12 @@ window.ARThreeOnLoad = function (sourceId) {
 			var h = screen.height * ratio;
 			*/
 
-			//EDITED BY ANARGU
+			/*//EDITED BY ANARGU
 			//extracted from http://stackoverflow.com/questions/17359915/get-screen-resolution-on-a-mobile-website
 			
 			var w = window.screen.width;
 			var h = window.screen.height;
-			
+			*/
 
 			renderer.setSize(w, h)
 			renderer.domElement.style.paddingBottom = (w-h) + 'px'
