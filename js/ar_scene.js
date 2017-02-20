@@ -189,8 +189,20 @@ window.ARThreeOnLoad = function (sourceId) {
 		if(arController.orientation === 'portrait') {
 			// w
 			// h
-			var h = (window.innerWidth / arController.videoHeight) * arController.videoWidth
-			var w = (window.innerWidth)
+			/*	ORIGINAL VERSION
+				var w = (window.innerWidth / arController.videoHeight) * arController.videoWidth
+				var h = (window.innerWidth)
+			*/
+			/*	ANARGU CUSTOM VERSION
+				var h = (window.innerWidth / arController.videoWidth) * arController.videoHeight
+				var w = (window.innerWidth)
+			*/
+
+			//extracted from http://stackoverflow.com/questions/17359915/get-screen-resolution-on-a-mobile-website
+			var ratio = window.devicePixelRatio || 1;
+			var w = screen.width * ratio;
+			var h = screen.height * ratio;
+			
 			renderer.setSize(w, h)
 			renderer.domElement.style.paddingBottom = (w-h) + 'px'
 			console.log(w, "w")
