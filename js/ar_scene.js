@@ -214,7 +214,7 @@ window.ARThreeOnLoad = function (sourceId) {
 			var h = window.screen.height;
 			*/
 
-			renderer.setSize(h, w) //setSize(height, width)
+			renderer.setSize(w, h) //setSize(height, width)
 			renderer.domElement.style.paddingBottom = (w-h) + 'px'
 			console.log(w, "w")
 			console.log(h, "h")
