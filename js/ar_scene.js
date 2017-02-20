@@ -168,11 +168,12 @@ var createAsideBox = function (groupBox, intersect) {
 	return { cube: cube, cubes: cubes ,boxGroup: groupBox }
 }
 
-window.ARThreeOnLoad = function () {
+window.ARThreeOnLoad = function (sourceId) {
 	ARController.getUserMediaThreeScene( { 	
 											//facingMode: {
 											//	      exact: 'environment'
 											//	      },
+											sourceId: sourceId,
 											maxARVideoSize: 320, 
 											cameraParam: 'Data/camera_para-iPhone 5 rear 640x480 1.0m.dat',
 	onSuccess: function(arScene, arController, arCamera) {
@@ -254,22 +255,25 @@ window.ARThreeOnLoad = function () {
 
 }
 
+/*
 if( window.ARController && ARController.getUserMediaThreeScene) {
 	ARThreeOnLoad()
 }
+*/
 
+/*
 let handleStream = s => {
   console.log("handleStream")
-  /*
+  
   document.body.append(
     Object.assign(document.createElement('video'), {
       autoplay: true,
       srcObject: s
     })
   );
-  */
-}
-
+  
+}*/
+/*
 navigator.mediaDevices.enumerateDevices().then(devices => {
   let sourceId = null;
   console.log("navigator.mediaDevices")
@@ -293,3 +297,24 @@ navigator.mediaDevices.enumerateDevices().then(devices => {
   navigator.mediaDevices.getUserMedia(constraints)
     .then(handleStream);
 });
+*/
+navigator.mediaDevices.enumerateDevices()
+  .then(
+    function(devices) {
+      let sourceId = null;
+      // Enumerate all devices
+      for (var device of devices) {
+        // If there is still no video input, or if this is the rear camera
+        if (device.kind == 'videoinput' && (!sourceId || device.label.indexOf('back') !== -1)) {
+          sourceId = device.deviceId;
+        }
+      }
+      // We didn't find any video input
+      if (!sourceId) {
+        throw 'No video input';
+      }
+
+      window.ARThreeOnLoad(sourceId);
+
+    }
+  );
