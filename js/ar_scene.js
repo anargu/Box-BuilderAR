@@ -199,7 +199,7 @@ window.ARThreeOnLoad = function (sourceId) {
 			*/
 
 				//ANARGU CUSTOM VERSION 2
-			var h = (window.innerHeight)
+			var h = (window.innerHeight) + ((window.innerHeight)/2) 
 			var w = (window.innerWidth)
 			
 			/*
