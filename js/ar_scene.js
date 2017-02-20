@@ -189,7 +189,7 @@ window.ARThreeOnLoad = function (sourceId) {
 		if(arController.orientation === 'portrait') {
 			// w
 			// h
-			var h = (window.innerWidth / arController.videoHeight) * arController.videoWidth
+			var h = (window.innerWidth / arController.videoWidth) * arController.videoHeight
 			var w = (window.innerWidth)
 			renderer.setSize(w, h)
 			renderer.domElement.style.paddingBottom = (w-h) + 'px'
