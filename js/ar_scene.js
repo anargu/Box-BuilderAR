@@ -174,25 +174,36 @@ window.ARThreeOnLoad = function (sourceId) {
 											//	      exact: 'environment'
 											//	      },
 											sourceId: sourceId,
-											maxARVideoSize: 320, 
+											maxARVideoSize: 1080, 
 											cameraParam: 'Data/camera_para-iPhone 5 rear 640x480 1.0m.dat',
 	onSuccess: function(arScene, arController, arCamera) {
 
+		arScene.video.videoWidth = 1000
+		arScene.video.videoHeight = 1000
+		console.log("arScene")
 		arController.setPatternDetectionMode(artoolkit.AR_MATRIX_CODE_DETECTION)
 		document.body.className = arController.orientation
+		console.log(arController.orientation)
 
 		var renderer = new THREE.WebGLRenderer( {antialias: true} )
 		if(arController.orientation === 'portrait') {
-			var w = (window.innerWidth / arController.videoHeight) * arController.videoWidth
-			var h = (window.innerWidth)
+			// w
+			// h
+			var h = (window.innerWidth / arController.videoHeight) * arController.videoWidth
+			var w = (window.innerWidth)
 			renderer.setSize(w, h)
 			renderer.domElement.style.paddingBottom = (w-h) + 'px'
+			console.log(w, "w")
+			console.log(h, "h")
 		} else {
 			if (/Android|mobile|iPad|iPhone/i.test(navigator.userAgent)) {
 				renderer.setSize(window.innerWidth, (window.innerWidth / arController.videoWidth) * arController.videoHeight)
 			} else {
+				//desktop
 				renderer.setSize(arController.videoWidth, arController.videoHeight)
 				document.body.className = ' desktop'
+				console.log(arController.videoWidth, "w")
+				console.log(arController.videoHeight, "h")
 			}
 		}
 
