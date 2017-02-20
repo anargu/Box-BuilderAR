@@ -174,12 +174,10 @@ window.ARThreeOnLoad = function (sourceId) {
 											//	      exact: 'environment'
 											//	      },
 											sourceId: sourceId,
-											maxARVideoSize: 1080, 
+											maxARVideoSize: 800, 
 											cameraParam: 'Data/camera_para-iPhone 5 rear 640x480 1.0m.dat',
 	onSuccess: function(arScene, arController, arCamera) {
 
-		arScene.video.videoWidth = 1000
-		arScene.video.videoHeight = 1000
 		console.log("arScene")
 		arController.setPatternDetectionMode(artoolkit.AR_MATRIX_CODE_DETECTION)
 		document.body.className = arController.orientation
@@ -200,7 +198,7 @@ window.ARThreeOnLoad = function (sourceId) {
 
 				//ANARGU CUSTOM VERSION 2
 			var h = (window.innerHeight) + ((window.innerHeight)/4) 
-			var w = (window.innerWidth)
+			var w = (window.innerWidth) +((window.innerWidth)/4)
 			
 			/*
 			//extracted from http://stackoverflow.com/questions/17359915/get-screen-resolution-on-a-mobile-website
