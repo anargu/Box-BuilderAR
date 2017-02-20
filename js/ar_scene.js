@@ -198,11 +198,20 @@ window.ARThreeOnLoad = function (sourceId) {
 				var w = (window.innerWidth)
 			*/
 
+			/*
 			//extracted from http://stackoverflow.com/questions/17359915/get-screen-resolution-on-a-mobile-website
 			var ratio = window.devicePixelRatio || 1;
 			var w = screen.width * ratio;
 			var h = screen.height * ratio;
+			*/
+
+			//EDITED BY ANARGU
+			//extracted from http://stackoverflow.com/questions/17359915/get-screen-resolution-on-a-mobile-website
 			
+			var w = screen.width;
+			var h = screen.height;
+			
+
 			renderer.setSize(w, h)
 			renderer.domElement.style.paddingBottom = (w-h) + 'px'
 			console.log(w, "w")
