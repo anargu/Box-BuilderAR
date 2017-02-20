@@ -208,8 +208,8 @@ window.ARThreeOnLoad = function (sourceId) {
 			//EDITED BY ANARGU
 			//extracted from http://stackoverflow.com/questions/17359915/get-screen-resolution-on-a-mobile-website
 			
-			var w = screen.width;
-			var h = screen.height;
+			var w = window.screen.width;
+			var h = window.screen.height;
 			
 
 			renderer.setSize(w, h)
