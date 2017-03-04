@@ -1,6 +1,6 @@
 
 const CUBE_SCALE = 0.25 // 0.5 0.25 def 1
-CONST COLOR_CUBE = 0x29dbbd
+const COLOR_CUBE = 0x29dbbd
 
 var raycasterDetection = function (ev, camera, objects) {
 
