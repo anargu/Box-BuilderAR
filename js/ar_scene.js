@@ -1,6 +1,7 @@
 
 const CUBE_SCALE = 0.25 // 0.5 0.25 def 1
-const COLOR_CUBE = 0x29dbbd
+// const COLOR_CUBE = 0x29dbbd
+var COLOR_CUBE = '#ffdbbd'
 
 var raycasterDetection = function (ev, camera, objects) {
 
@@ -56,7 +57,7 @@ var raycasterDetection = function (ev, camera, objects) {
 	var raycaster = new THREE.Raycaster( camera.position, mouse3D)
 	var intersects = raycaster.intersectObjects( objects )
 	if( intersects.length > 0) {
-		console.log(intersects[0])
+		// console.log(intersects[0])
 		var obj = intersects[0].object
 		// return obj
 		return intersects[0]
@@ -87,45 +88,9 @@ var createBox = function ( groupBox ) {
 	cube.position.y = 0
 	groupBox.add(cube)
 
-	// boxWall = boxWall.clone()
-	// boxWall.position.z = +0.5
-	// box.add(boxWall)
-
-	// boxWall = boxWall.clone()
-	// boxWall.position.z = 0
-	// boxWall.position.x = -0.5
-	// boxWall.rotation.y = Math.PI/2
-	// box.add(boxWall)
-
-	// boxWall = boxWall.clone()
-	// boxWall.position.x = +0.5
-	// box.add(boxWall)
-
-	// boxWall = boxWall.clone()
-	// boxWall.position.x = 0
-	// boxWall.position.y = -0.5
-	// boxWall.rotation.y = 0
-	// boxWall.rotation.x = Math.PI/2
-	// box.add(boxWall)
 
 	var cubes = groupBox.children.slice()
 
-	// var pivot = new THREE.Object3D()
-	// pivot.position.y = 0.5
-	// pivot.position.x = 0.5
-
-	// boxWall = boxWall.clone()
-	// boxWall.position.y = 0
-	// boxWall.position.x = -0.5
-	// pivot.add(boxWall)
-	// box.add(pivot)
-
-	// cubes.push(boxWall)
-
-	// box.position.z = 0.5
-	// box.rotation.x = Math.PI/2
-
-	// box.open = false
 
 	cube.tick = function() {
 
@@ -157,7 +122,7 @@ var createAsideBox = function (groupBox, intersect) {
 
 	var cube = new THREE.Mesh(
 		new THREE.BoxGeometry(CUBE_SCALE, CUBE_SCALE, CUBE_SCALE),
-		new THREE.MeshLambertMaterial( {color: 0xffffff} )
+		new THREE.MeshLambertMaterial( {color: COLOR_CUBE} )
 		)
 
 	intersectedCubePosition = intersect.object.position
@@ -169,6 +134,22 @@ var createAsideBox = function (groupBox, intersect) {
 	groupBox.add(cube)
 	var cubes = groupBox.children.slice()
 	return { cube: cube, cubes: cubes ,boxGroup: groupBox }
+}
+
+var randomColor = function () {
+
+	var r = THREE.Math.randInt(0,255)
+	var g = THREE.Math.randInt(0,255)
+	var b = THREE.Math.randInt(0,255)
+
+	var r_ = r.toString(16).length === 1 ? "0" + r.toString(16) : r.toString(16)   
+	var g_ = g.toString(16).length === 1 ? "0" + g.toString(16) : g.toString(16)
+	var b_ = b.toString(16).length === 1 ? "0" + b.toString(16) : b.toString(16)
+
+
+	console.log(r_, g_, b_, " << color")
+	console.log( "#"+r_+g_+b_ )
+	return "#"+r_+g_+b_
 }
 
 window.ARThreeOnLoad = function (sourceId) {
@@ -268,7 +249,7 @@ window.ARThreeOnLoad = function (sourceId) {
 
 				// create a side box
 				var cube = createAsideBox(groupBox, intersect)
-
+				COLOR_CUBE = randomColor()
 			}
 		}, false)
 
@@ -293,49 +274,7 @@ window.ARThreeOnLoad = function (sourceId) {
 
 }
 
-/*
-if( window.ARController && ARController.getUserMediaThreeScene) {
-	ARThreeOnLoad()
-}
-*/
 
-/*
-let handleStream = s => {
-  console.log("handleStream")
-
-  document.body.append(
-    Object.assign(document.createElement('video'), {
-      autoplay: true,
-      srcObject: s
-    })
-  );
-
-}*/
-/*
-navigator.mediaDevices.enumerateDevices().then(devices => {
-  let sourceId = null;
-  console.log("navigator.mediaDevices")
-  // enumerate all devices
-  for (var device of devices) {
-    // if there is still no video input, or if this is the rear camera
-    if (device.kind == 'videoinput' &&
-        (!sourceId || device.label.indexOf('back') !== -1)) {
-      sourceId = device.deviceId;
-    }
-  }
-  // we didn't find any video input
-  if (!sourceId) {
-    throw 'no video input';
-  }
-  let constraints = {
-    video: {
-      sourceId: sourceId
-    }
-  };
-  navigator.mediaDevices.getUserMedia(constraints)
-    .then(handleStream);
-});
-*/
 navigator.mediaDevices.enumerateDevices()
   .then(
     function(devices) {
