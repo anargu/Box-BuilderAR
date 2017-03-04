@@ -1,4 +1,7 @@
 
+const CUBE_SCALE = 0.25 // 0.5 0.25 def 1
+CONST COLOR_CUBE = 0x29dbbd
+
 var raycasterDetection = function (ev, camera, objects) {
 
 	// console.log(ev, camera, objects)
@@ -76,7 +79,7 @@ var createBox = function ( groupBox ) {
 
 	// var groupBox = new THREE.Object3D()
 	var cube = new THREE.Mesh(
-			new THREE.BoxGeometry(1, 1, 1, 1, 1, 1),
+			new THREE.BoxGeometry(CUBE_SCALE, CUBE_SCALE, CUBE_SCALE, 1, 1, 1),
 			new THREE.MeshLambertMaterial( {color: 0xffffff} )
 	)
 	cube.position.z = 0
@@ -127,22 +130,22 @@ var createBox = function ( groupBox ) {
 	cube.tick = function() {
 
 		// pivot.rotation.z += ((box.open ? -Math.PI/1.5 : 0) - pivot.rotation.z) * 0.1
-	
+
 	}
 
 	return { cube: cube, cubes: cubes, boxGroup: groupBox}
 }
 
 var createRandomBox = function(groupBox) {
-	
+
 	var cube = new THREE.Mesh(
-		new THREE.BoxGeometry(1,1,1),
+		new THREE.BoxGeometry(CUBE_SCALE,CUBE_SCALE,CUBE_SCALE),
 		new THREE.MeshLambertMaterial( {color: 0xffffff} )
 		)
 	cube.position.z = 0
 	cube.position.x = Math.random() * 3
 	cube.position.y = Math.random() * 3
-	
+
 	var cubes = groupBox.children.slice()
 	groupBox.add(cube) // update boxGroup
 
@@ -153,15 +156,15 @@ var createRandomBox = function(groupBox) {
 var createAsideBox = function (groupBox, intersect) {
 
 	var cube = new THREE.Mesh(
-		new THREE.BoxGeometry(1,1,1),
+		new THREE.BoxGeometry(CUBE_SCALE, CUBE_SCALE, CUBE_SCALE),
 		new THREE.MeshLambertMaterial( {color: 0xffffff} )
 		)
 
 	intersectedCubePosition = intersect.object.position
 
-	cube.position.x = intersectedCubePosition.x + intersect.face.normal.x * 1
-	cube.position.y = intersectedCubePosition.y + intersect.face.normal.y * 1
-	cube.position.z = intersectedCubePosition.z + intersect.face.normal.z * 1
+	cube.position.x = intersectedCubePosition.x + intersect.face.normal.x * CUBE_SCALE
+	cube.position.y = intersectedCubePosition.y + intersect.face.normal.y * CUBE_SCALE
+	cube.position.z = intersectedCubePosition.z + intersect.face.normal.z * CUBE_SCALE
 
 	groupBox.add(cube)
 	var cubes = groupBox.children.slice()
@@ -169,12 +172,12 @@ var createAsideBox = function (groupBox, intersect) {
 }
 
 window.ARThreeOnLoad = function (sourceId) {
-	ARController.getUserMediaThreeScene( { 	
+	ARController.getUserMediaThreeScene( {
 											//facingMode: {
 											//	      exact: 'environment'
 											//	      },
 											sourceId: sourceId,
-											maxARVideoSize: 320, 
+											maxARVideoSize: 320,
 											cameraParam: 'Data/camera_para-iPhone 5 rear 640x480 1.0m.dat',
 	onSuccess: function(arScene, arController, arCamera) {
 
@@ -197,9 +200,9 @@ window.ARThreeOnLoad = function (sourceId) {
 			*/
 
 				//ANARGU CUSTOM VERSION 2
-			var h = (window.innerHeight) + 400 //+ ((window.innerHeight)/4) 
-			var w = (window.innerWidth) 
-			
+			var h = (window.innerHeight) + 400 //+ ((window.innerHeight)/4)
+			var w = (window.innerWidth)
+
 			/*
 			//extracted from http://stackoverflow.com/questions/17359915/get-screen-resolution-on-a-mobile-website
 			var ratio = window.devicePixelRatio || 1;
@@ -209,12 +212,12 @@ window.ARThreeOnLoad = function (sourceId) {
 
 			/*//EDITED BY ANARGU
 			//extracted from http://stackoverflow.com/questions/17359915/get-screen-resolution-on-a-mobile-website
-			
+
 			var w = window.screen.width;
 			var h = window.screen.height;
 			*/
 
-			renderer.setSize(w, h) //setSize(height, width) or setSize(width, height) ?? 
+			renderer.setSize(w, h) //setSize(height, width) or setSize(width, height) ??
 			renderer.domElement.style.paddingBottom = (w-h) + 'px'
 			console.log(w, "w")
 			console.log(h, "h")
@@ -223,7 +226,8 @@ window.ARThreeOnLoad = function (sourceId) {
 				renderer.setSize(window.innerWidth, (window.innerWidth / arController.videoWidth) * arController.videoHeight)
 			} else {
 				//desktop
-				renderer.setSize(arController.videoWidth, arController.videoHeight)
+				// renderer.setSize(arController.videoWidth, arController.videoHeight)
+				renderer.setSize(1024, 768)
 				document.body.className = ' desktop'
 				console.log(arController.videoWidth, "w")
 				console.log(arController.videoHeight, "h")
@@ -235,8 +239,8 @@ window.ARThreeOnLoad = function (sourceId) {
 		var light = new THREE.PointLight(0xffffff)
 		light.position.set(40,40,40)
 		arScene.scene.add(light)
-		
-		var light = new THREE.PointLight(0xdbbd29);
+
+		var light = new THREE.PointLight(COLOR_CUBE);
 		light.position.set(-40, -20, -30);
 		arScene.scene.add(light);
 
@@ -251,9 +255,9 @@ window.ARThreeOnLoad = function (sourceId) {
 
 		var groupBox = createGroupBox()
 		var box = createBox(groupBox)
-		
+
 		renderer.domElement.addEventListener('click', function (ev) {
-			
+
 			var intersect = raycasterDetection(ev, arScene.camera, groupBox.children.slice())
 
 			if (intersect !== undefined) {
@@ -261,10 +265,10 @@ window.ARThreeOnLoad = function (sourceId) {
 
 				//create random cube aside of the clicked cube
 				// var cube = createRandomBox(groupBox)
-				
+
 				// create a side box
 				var cube = createAsideBox(groupBox, intersect)
-				
+
 			}
 		}, false)
 
@@ -298,14 +302,14 @@ if( window.ARController && ARController.getUserMediaThreeScene) {
 /*
 let handleStream = s => {
   console.log("handleStream")
-  
+
   document.body.append(
     Object.assign(document.createElement('video'), {
       autoplay: true,
       srcObject: s
     })
   );
-  
+
 }*/
 /*
 navigator.mediaDevices.enumerateDevices().then(devices => {
